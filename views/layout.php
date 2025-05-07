@@ -1,70 +1,72 @@
 <?php
-    namespace Lucancstr\GestionChenil\views;
+namespace Lucancstr\GestionChenil\views;
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?></title>
+    <title><?= $title ?? 'Les Amis Fidèles' ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background-color: #f2f2f2;
+        }
         header {
-            background-color: #f8f9fa;
-            padding: 15px 0;
+            background-color: rgb(55, 118, 173);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        header a {
-            color: #343a40;
-            transition: color 0.3s;
-            text-decoration: none;
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: white;
+            font-weight: 500;
         }
-        header a:hover {
-            color: #007bff;
-        }
-        h1 {
-            font-size: 1.5rem;
-            font-weight: bold;
+        .navbar-brand:hover,
+        .navbar-nav .nav-link:hover {
+            color: #dce9f7;
         }
         .content {
             margin: 20px auto;
             max-width: 1200px;
         }
+        .logo-img {
+            height: 40px;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
-    <header>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(55, 118, 173);">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <a href="/" class="h2 mb-0">Watix Corner</a>
-                <nav>
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout">Logout</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/profile">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin">Admin</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/gestion">Gestion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/panier">Panier</a>
-                        </li>
-                    </ul>
-                </nav>
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/img/logo.png" alt="Logo Les Amis Fidèles" class="me-3 logo-img">
+                Les Amis Fidèles
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/utilisateurs">Utilisateurs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/reservations">Réservation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/animaux">Animaux</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/calendrier">Calendrier</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/rapports">Rapports</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Déconnexion</a></li>
+                </ul>
             </div>
         </div>
-    </header>
-    <div class="content container">
-        <?= $content ?>
-    </div>  
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </nav>
+</header>
+
+<div class="content container">
+    <?= $content ?>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

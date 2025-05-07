@@ -10,7 +10,7 @@
 
 <main class="bg-white d-flex justify-content-center align-items-center vh-100 bg-light">
     <div class="container">
-    <div class="row justify-content-center mt-5">
+    <div class="row justify-content-center">
         <div class="col-md-7 col-lg-5">
             <div class="card shadow-lg p-4 rounded-4 border-0 d-flex flex-column justify-content-between" style="min-height: 730px;">
                 

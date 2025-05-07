@@ -124,5 +124,13 @@ class Utilisateur
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public static function getAll()
+    {
+        $pdo = Database::connection();
+        $stmt = $pdo->query("SELECT IdUtilisateur, Nom, Prenom, Pseudo, Email, DateNaissance, Statut FROM UTILISATEURS");
+        return $stmt->fetchAll();
+    }
+    
     
 }
