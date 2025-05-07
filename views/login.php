@@ -48,6 +48,13 @@
                             <?php unset($_SESSION['form_succes']); ?>
                         <?php endif; ?>
 
+                        <?php if (!empty($_SESSION['form_error'])): ?>
+                            <div class="alert alert-danger p-2">
+                                <?= htmlspecialchars($_SESSION['form_error']) ?>
+                            </div>
+                            <?php unset($_SESSION['form_error']); ?>
+                        <?php endif; ?>
+
                         <div class="d-grid mt-4">
                             <button type="submit" class="btn" style="background-color: rgb(55, 118, 173); color: white;">Se connecter</button>
                         </div>

@@ -24,6 +24,7 @@ class AuthController extends BaseController {
         $birthdate = trim($postData['birthdate']);
         $email = trim($postData['email']);
         $password = trim($postData['password']); // On garde brut pour ne pas casser les caractères spéciaux
+        $confirmPassword = trim($postData['confirm_password']);
     
         $data = [
             'name' => $name,
@@ -56,6 +57,11 @@ class AuthController extends BaseController {
             $_SESSION['form_error'] = "Cet email est deja utilisé.";
         }
 
+        // Passeword ne correspondent pas
+        if ($password !== $confirmPassword) {
+            $_SESSION['form_error'] = "Les mots de passe ne correspondent pas.";
+        }
+
         // Validation du mot de passe
         try {
             Utilisateur::validatePassword($password);
@@ -67,13 +73,13 @@ class AuthController extends BaseController {
             try {
                 Utilisateur::createAccount($name, $firstname, $pseudo, $password, $email, $birthdate);
                 $_SESSION['form_succes'] = "Compte crée avec succès.";
-                    return $this->view->render($response->withStatus(302), 'login.php');
+                    return $this->renderWithoutLayout($response->withStatus(302), 'login.php');
             } catch (\Exception $e) {
                 throw new \Exception($e->getMessage());
             }
         }
 
-        return $this->view->render($response->withStatus(302), 'register.php', ['data' => $data]);
+        return $this->renderWithoutLayout($response->withStatus(302), 'register.php', ['data' => $data]);
     }
 
     public function login(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
@@ -114,7 +120,7 @@ class AuthController extends BaseController {
             }
         }
 
-        return $this->view->render($response->withStatus(302), 'login.php', ['data' => $data]);
+        return $this->renderWithoutLayout($response->withStatus(302),'login.php', ['data' => $data]);
     
     }
     

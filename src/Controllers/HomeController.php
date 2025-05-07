@@ -20,11 +20,11 @@ class HomeController extends BaseController {
 
     public function showLoginPage(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
     {   
-        return $this->view->render($response, 'login.php');
+        return $this->renderWithoutLayout($response, 'login.php');
     }
 
     public function showRegisterPage(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
     {   
-        return $this->view->render($response, 'register.php');
+        return $this->renderWithoutLayout($response, 'register.php');
     }
 }
