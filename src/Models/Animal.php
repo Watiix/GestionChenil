@@ -49,6 +49,16 @@ class Animal
         return $stmt->fetchAll();
     }
 
+    public static function getAnimalByIdAnimal($id)
+    {
+        $pdo = Database::connection();
+        $stmt = $pdo->prepare("SELECT IdAnimal, NomAnimal, Race, Age, Sexe, Poids, Taille, Alimentation, IdProprietaire FROM ANIMAUX WHERE IdAnimal = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public static function addAnimal($NomAnimal, $Race, $Age, $Sexe, $Poids, $Taille, $Alimentation, $IdProprietaire)
     {
         $pdo = Database::connection();
@@ -73,6 +83,24 @@ class Animal
         $pdo = Database::connection();
         $stmt = $pdo->prepare("DELETE FROM ANIMAUX WHERE IdAnimal = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public static function updateAnimal($NomAnimal, $Race, $Age, $Sexe, $Poids, $Taille, $Alimentation, $IdProprietaire, $IdAnimal)
+    {
+        $pdo = Database::connection();
+        $stmt = $pdo->prepare("UPDATE ANIMAUX SET NomAnimal = :NomAnimal, Race = :Race, Age = :Age, Sexe = :Sexe, Poids = :Poids, Taille = :Taille, Alimentation = :Alimentation, IdProprietaire = :IdProprietaire WHERE IdAnimal = :IdAnimal");
+
+        $stmt->bindParam(':NomAnimal', $NomAnimal);
+        $stmt->bindParam(':Race', $Race);
+        $stmt->bindParam(':Age', $Age, PDO::PARAM_INT);
+        $stmt->bindParam(':Sexe', $Sexe);
+        $stmt->bindParam(':Poids', $Poids);
+        $stmt->bindParam(':Taille', $Taille);
+        $stmt->bindParam(':Alimentation', $Alimentation);
+        $stmt->bindParam(':IdProprietaire', $IdProprietaire, PDO::PARAM_INT);
+        $stmt->bindParam(':IdAnimal', $IdAnimal, PDO::PARAM_INT);
+
         $stmt->execute();
     }
 }

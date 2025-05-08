@@ -24,7 +24,7 @@
                     <div class="card h-100 shadow-sm">
                         <div class="card-body p-3 position-relative">
                             <!-- Icône Modifier en haut à droite -->
-                            <a href="/animal-edit?id=<?= $animal['IdAnimal'] ?>" class="position-absolute top-0 end-0 m-2 text-primary" title="Modifier">
+                            <a href="/animal-edit/<?= $animal['IdAnimal'] ?>" class="position-absolute top-0 end-0 m-2 text-primary" title="Modifier">
                                 <i class="bi bi-pencil-square fs-5"></i>
                             </a>
 

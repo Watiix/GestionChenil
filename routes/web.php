@@ -3,6 +3,7 @@
 use Lucancstr\GestionChenil\Controllers\HomeController;
 use Lucancstr\GestionChenil\Controllers\AuthController;
 use Lucancstr\GestionChenil\Controllers\AnimalController;
+use Lucancstr\GestionChenil\Controllers\UtilisateurController;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -19,6 +20,10 @@ $app->get('/animaux', [AnimalController::class, 'getAnimaux']);
 $app->post('/animal-post', [AnimalController::class, 'addAnimal']);
 $app->get('/animal-form', [AnimalController::class, 'showAnimalFormPage']);
 $app->get('/animal-delete/{id:[0-9]+}', [AnimalController::class, 'deleteAnimal']);
+$app->get('/animal-edit/{id:[0-9]+}', [AnimalController::class, 'showEditForm']);
+$app->post('/animal-update/{id:[0-9]+}', [AnimalController::class, 'updateAnimal']);
+
+$app->get('/utilisateurs', [UtilisateurController::class, 'getAnimaux']);
 
 
 // $app->get('/profile', [HomeController::class, 'showProfilePage']);
