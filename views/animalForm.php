@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>  
-<main class="bg-white py-5 pt-5 mt-5"> 
+<main class="bg-white py-5 pt-5 mt-4"> 
     <div class="container">
         <div class="row justify-content-center mt-4">
             <div class="col-md-8 col-lg-6">

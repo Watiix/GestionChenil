@@ -112,9 +112,17 @@ class AuthController extends BaseController {
                 $userId = $user['IdUtilisateur'];
                 $userData = Utilisateur::getUserbyId($userId);
                 $_SESSION['user'] = $userData;
-                return $response
+
+                if($_SESSION['user']['Valide'] === 0)
+                {
+                    $_SESSION['form_error'] = "Votre compte n'est pas valider par un adminitrateur";
+                }
+                else
+                {
+                    return $response
                     ->withHeader('Location', '/')
                     ->withStatus(302);
+                }
             } catch (\Exception $e) {
                 $_SESSION['form_error'] = "Erreur de login.";
             }

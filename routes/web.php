@@ -23,7 +23,15 @@ $app->get('/animal-delete/{id:[0-9]+}', [AnimalController::class, 'deleteAnimal'
 $app->get('/animal-edit/{id:[0-9]+}', [AnimalController::class, 'showEditForm']);
 $app->post('/animal-update/{id:[0-9]+}', [AnimalController::class, 'updateAnimal']);
 
-$app->get('/utilisateurs', [UtilisateurController::class, 'getAnimaux']);
+$app->get('/utilisateurs', [UtilisateurController::class, 'getUsers']);
+$app->get('/utilisateur-accepted/{id:[0-9]+}', [UtilisateurController::class, 'acceptUser']);
+$app->get('/utilisateur-refused/{id:[0-9]+}', [UtilisateurController::class, 'refusedUser']);
+$app->get('/utilisateur-delete/{id:[0-9]+}', [UtilisateurController::class, 'refusedUser']);
+
+$app->get('/utilisateur-showForm', [UtilisateurController::class, 'showUserForm']);
+$app->get('/utilisateur-edit/{id:[0-9]+}', [UtilisateurController::class, 'editUser']);
+$app->post('/utilisateur-add', [UtilisateurController::class, 'addUtilisateur']);
+
 
 
 // $app->get('/profile', [HomeController::class, 'showProfilePage']);

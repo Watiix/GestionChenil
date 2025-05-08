@@ -119,7 +119,7 @@ class Utilisateur
     public static function getUserbyId($id)
     {
         $pdo = Database::connection();
-        $stmt = $pdo->prepare("SELECT IdUtilisateur, Nom, Prenom, Pseudo, Email, DateNaissance, Statut FROM UTILISATEURS WHERE IdUtilisateur = :id");
+        $stmt = $pdo->prepare("SELECT IdUtilisateur, Nom, Prenom, Pseudo, Email, DateNaissance, Statut, Valide FROM UTILISATEURS WHERE IdUtilisateur = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -128,9 +128,46 @@ class Utilisateur
     public static function getAll()
     {
         $pdo = Database::connection();
-        $stmt = $pdo->query("SELECT IdUtilisateur, Nom, Prenom, Pseudo, Email, DateNaissance, Statut FROM UTILISATEURS");
+        $stmt = $pdo->query("SELECT IdUtilisateur, Nom, Prenom, Pseudo, Email, DateNaissance, Statut, Valide FROM UTILISATEURS");
         return $stmt->fetchAll();
     }
+
+    public static function validateUser($id)
+    {
+        $pdo = Database::connection();
+        
+        $stmt = $pdo->prepare("UPDATE UTILISATEURS SET Valide = 1 WHERE IdUtilisateur = :id");
+
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
     
+    public static function refusedUser($id)
+    {
+        $pdo = Database::connection();
+        
+        $stmt = $pdo->prepare("DELETE FROM UTILISATEURS WHERE IdUtilisateur = :id");
+
+        $stmt->execute(['id' => $id]);
+        $stmt->execute();
+    }
+
+    public static function addUtilisateur($Nom, $Prenom, $Pseudo, $MotDePasse, $Email, $DateNaissance, $Statut)
+    {
+        $pdo = Database::connection();
+    
+        $stmt = $pdo->prepare("INSERT INTO UTILISATEURS (Nom, Prenom, Pseudo, MotDePasse, Email, DateNaissance, Statut)
+                VALUES (:Nom, :Prenom, :Pseudo, :MotDePasse, :Email, :DateNaissance, :Statut");
+    
+        $stmt->bindParam(':Nom', $Nom, PDO::PARAM_STR);
+        $stmt->bindParam(':Prenom', $Prenom, PDO::PARAM_STR);
+        $stmt->bindParam(':Pseudo', $Pseudo, PDO::PARAM_STR);
+        $stmt->bindParam(':MotDePasse', $MotDePasse, PDO::PARAM_STR);
+        $stmt->bindParam(':Email', $Email, PDO::PARAM_STR);
+        $stmt->bindParam(':DateNaissance', $DateNaissance, PDO::PARAM_STR);
+        $stmt->bindParam(':Statut', $Statut, PDO::PARAM_INT);
+    
+        $stmt->execute();
+    }
     
 }
