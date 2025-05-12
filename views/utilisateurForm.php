@@ -1,4 +1,4 @@
-<?php $isEdit = isset($utilisateur); ?>
+<?php $isEdit = isset($utilisateurs['IdUtilisateur']); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -19,49 +19,56 @@
                         <p class="text-muted">Complétez les informations de l'utilisateur</p>
                     </div>
 
-                    <form action="<?= $isEdit ? '/utilisateur-update/' . $utilisateur['IdUtilisateur'] : '/utilisateur-add' ?>" method="post">
+                    <form action="<?= $isEdit ? '/utilisateur-update/' . $utilisateurs['IdUtilisateur'] : '/utilisateur-add' ?>" method="post">
 
                         <div class="mb-3">
                             <label for="Nom" class="form-lab    el">Nom</label>
                             <input type="text" class="form-control" id="Nom" name="Nom" required
-                                   value="<?= htmlspecialchars($utilisateur['Nom'] ?? '') ?>">
+                                   value="<?= htmlspecialchars($utilisateurs['Nom'] ?? '') ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="Prenom" class="form-label">Prénom</label>
                             <input type="text" class="form-control" id="Prenom" name="Prenom" required
-                                   value="<?= htmlspecialchars($utilisateur['Prenom'] ?? '') ?>">
+                                   value="<?= htmlspecialchars($utilisateurs['Prenom'] ?? '') ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="Pseudo" class="form-label">Pseudo</label>
                             <input type="text" class="form-control" id="Pseudo" name="Pseudo" required
-                                   value="<?= htmlspecialchars($utilisateur['Pseudo'] ?? '') ?>">
+                                   value="<?= htmlspecialchars($utilisateurs['Pseudo'] ?? '') ?>">
                         </div>
-
-                        <div class="mb-3">
-                            <label for="MotDePasse" class="form-label">Mot de passe</label>
-                            <input type="password" class="form-control" id="MotDePasse" name="MotDePasse" <?= $isEdit ? '' : 'required' ?>>
-                        </div>
+                        <?php if ($isEdit): ?>
+                            <div class="mb-3">
+                                <label for="MotDePasseVisible" class="form-label">Mot de passe</label>
+                                <input type="password" class="form-control" id="MotDePasseVisible" value="<?= htmlspecialchars($utilisateurs['MotDePasse'] ?? '') ?>" disabled>
+                            </div>
+                            <input type="hidden" name="MotDePasse" value="<?= htmlspecialchars($utilisateurs['MotDePasse'] ?? '') ?>">
+                        <?php else: ?>
+                            <div class="mb-3">
+                                <label for="MotDePasse" class="form-label">Mot de passe</label>
+                                <input type="password" class="form-control" id="MotDePasse" name="MotDePasse" required>
+                            </div>
+                        <?php endif; ?>
 
                         <div class="mb-3">
                             <label for="Email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="Email" name="Email" required
-                                   value="<?= htmlspecialchars($utilisateur['Email'] ?? '') ?>">
+                                   value="<?= htmlspecialchars($utilisateurs['Email'] ?? '') ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="DateNaissance" class="form-label">Date de naissance</label>
                             <input type="date" class="form-control" id="DateNaissance" name="DateNaissance" required
-                                   value="<?= htmlspecialchars($utilisateur['DateNaissance'] ?? '') ?>">
+                                   value="<?= htmlspecialchars($utilisateurs['DateNaissance'] ?? '') ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="Statut" class="form-label">Statut</label>
                             <select class="form-select" id="Statut" name="Statut" required>
-                                <option value="" disabled <?= !isset($utilisateur['Statut']) ? 'selected' : '' ?>>-- Sélectionner --</option>
-                                <option value="1" <?= isset($utilisateur['Statut']) && $utilisateur['Statut'] == 1 ? 'selected' : '' ?>>Client</option>
-                                <option value="2" <?= isset($utilisateur['Statut']) && $utilisateur['Statut'] == 2 ? 'selected' : '' ?>>Employé</option>
+                                <option value="" disabled <?= !isset($utilisateurs['Statut']) ? 'selected' : '' ?>>-- Sélectionner --</option>
+                                <option value="1" <?= isset($utilisateurs['Statut']) && $utilisateurs['Statut'] == 1 ? 'selected' : '' ?>>Client</option>
+                                <option value="2" <?= isset($utilisateurs['Statut']) && $utilisateurs['Statut'] == 2 ? 'selected' : '' ?>>Employé</option>
                             </select>
                         </div>
 

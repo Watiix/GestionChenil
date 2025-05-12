@@ -12,6 +12,10 @@ class UtilisateurController extends BaseController {
 
     public function getUsers(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
     {
+        if($_SESSION['user']['Statut'] !== 3){
+            return $response->withHeader('Location', '/animaux')->withStatus(302);
+        }
+
         $utilisateurs = Utilisateur::getAll(); // Récupère tous les utilisateurs
 
         return $this->view->render($response, 'utilisateurs.php', [
@@ -21,6 +25,10 @@ class UtilisateurController extends BaseController {
 
     public function acceptUser(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
     {
+        if($_SESSION['user']['Statut'] !== 3){
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
+
         $idUtilisateur = $args['id'];
 
         Utilisateur::validateUser($idUtilisateur);
@@ -31,6 +39,10 @@ class UtilisateurController extends BaseController {
 
     public function refusedUser(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
     {
+        if($_SESSION['user']['Statut'] !== 3){
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
+
         $idUtilisateur = $args['id'];
 
         Utilisateur::refusedUser($idUtilisateur);
@@ -41,11 +53,18 @@ class UtilisateurController extends BaseController {
 
     public function showUserForm(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
     {
+        if($_SESSION['user']['Statut'] !== 3){
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
+
         return $this->view->render($response, 'utilisateurForm.php');
     }
 
     public function addUtilisateur(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
     {
+        if($_SESSION['user']['Statut'] !== 3){
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
 
         // Reset les messages
         unset($_SESSION['form_error']);
@@ -62,13 +81,13 @@ class UtilisateurController extends BaseController {
         $DateNaissance = trim($post['DateNaissance']);
         $Statut = trim($post['Statut']);
 
-        $data = [
-            'name' => $Nom,
-            'firstname' => $Prenom,
-            'pseudo' => $Pseudo,
-            'birthdate' => $Email,
-            'email' => $DateNaissance,
-            'statut' => $Statut
+        $utilisateurs = [
+            'Nom' => $Nom,
+            'Prenom' => $Prenom,
+            'Pseudo' => $Pseudo,
+            'Email' => $Email,
+            'DateNaissance' => $DateNaissance,
+            'Statut' => $Statut
         ];
 
         // Vérification email valide
@@ -105,7 +124,82 @@ class UtilisateurController extends BaseController {
                 throw $th;
             }
         }
-        // T'ES ICI BG
-        return $this->view->render($response->withStatus(302), 'utilisateurForm.php', ['data' => $data]);
+
+        return $this->view->render($response->withStatus(302), 'utilisateurForm.php', ['utilisateurs' => $utilisateurs]);
+    }
+
+    public function showEditForm(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
+    {
+        if($_SESSION['user']['Statut'] !== 3){
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
+
+        $id = $args['id'];
+        $utilisateurs = Utilisateur::getUserbyId($id);
+
+        return $this->view->render($response, 'utilisateurForm.php', [
+            'utilisateurs' => $utilisateurs
+        ]);
+    }
+
+    public function editUser(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
+    {
+        if($_SESSION['user']['Statut'] !== 3){
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
+
+         // Reset les messages
+        unset($_SESSION['form_error']);
+        unset($_SESSION['form_succes']);
+
+        $idUtilisateur = $args['id'];
+
+        $post = $request->getParsedBody();
+
+        // Nettoyage / Filtrage des champs
+        $Nom = trim($post['Nom']);
+        $Prenom = trim($post['Prenom']);
+        $Pseudo = trim($post['Pseudo']);
+        $Email = trim($post['Email']);
+        $MotDePasse = $post['MotDePasse'];
+        $DateNaissance = trim($post['DateNaissance']);
+        $Statut = trim($post['Statut']);
+
+        $utilisateurs = [
+            'IdUtilisateur' => $idUtilisateur,
+            'Nom' => $Nom,
+            'Prenom' => $Prenom,
+            'Pseudo' => $Pseudo,
+            'Email' => $Email,
+            'MotDepasse' => $MotDePasse,
+            'DateNaissance' => $DateNaissance,
+            'Statut' => $Statut
+        ];
+
+        // Vérification email valide
+        if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['form_error'] = "L'email est invalide.";
+        }
+
+        if (
+            empty($Nom) || empty($Prenom) || empty($Pseudo)
+            || empty($Email) || empty($DateNaissance) || empty($Statut)
+        ) {
+            $_SESSION['form_error'] = "Tous les champs doivent être remplis.";
+        } 
+
+        // Si pas d'erreur, on ajoute
+        if (!isset($_SESSION['form_error'])) {
+            try {
+                Utilisateur::updateUtilisateur($Nom, $Prenom, $Pseudo, $Email, $MotDePasse, $DateNaissance, $Statut, $idUtilisateur);
+                $_SESSION['form_succes'] = "Utilisateur modifié avec succès.";
+    
+                return $response->withHeader('Location', '/utilisateurs')->withStatus(302);
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+
+        return $this->view->render($response->withStatus(302), 'utilisateurForm.php', ['utilisateurs' => $utilisateurs]);
     }
 }

@@ -52,7 +52,10 @@ namespace Lucancstr\GestionChenil\views;
 
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="/utilisateurs">Utilisateurs</a></li>
+                <?php if($_SESSION['user']['Statut'] == 3)
+                {?>
+                    <li class="nav-item"><a class="nav-link" href="/utilisateurs">Utilisateurs</a></li><?php
+                }?>
                     <li class="nav-item"><a class="nav-link" href="/reservations">Réservation</a></li>
                     <li class="nav-item"><a class="nav-link" href="/animaux">Animaux</a></li>
                     <li class="nav-item"><a class="nav-link" href="/calendrier">Calendrier</a></li>

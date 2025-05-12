@@ -4,6 +4,7 @@ use Lucancstr\GestionChenil\Controllers\HomeController;
 use Lucancstr\GestionChenil\Controllers\AuthController;
 use Lucancstr\GestionChenil\Controllers\AnimalController;
 use Lucancstr\GestionChenil\Controllers\UtilisateurController;
+use Lucancstr\GestionChenil\Controllers\ReservationController;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -27,15 +28,9 @@ $app->get('/utilisateurs', [UtilisateurController::class, 'getUsers']);
 $app->get('/utilisateur-accepted/{id:[0-9]+}', [UtilisateurController::class, 'acceptUser']);
 $app->get('/utilisateur-refused/{id:[0-9]+}', [UtilisateurController::class, 'refusedUser']);
 $app->get('/utilisateur-delete/{id:[0-9]+}', [UtilisateurController::class, 'refusedUser']);
-
 $app->get('/utilisateur-showForm', [UtilisateurController::class, 'showUserForm']);
-$app->get('/utilisateur-edit/{id:[0-9]+}', [UtilisateurController::class, 'editUser']);
+$app->get('/utilisateur-edit/{id:[0-9]+}', [UtilisateurController::class, 'showEditForm']);
+$app->post('/utilisateur-update/{id:[0-9]+}', [UtilisateurController::class, 'editUser']);
 $app->post('/utilisateur-add', [UtilisateurController::class, 'addUtilisateur']);
 
-
-
-// $app->get('/profile', [HomeController::class, 'showProfilePage']);
-
-// $app->post('/update/user', [UtilisateurController::class, 'updateUser']);
-
-// $app->post('/test/create', [TestController::class, 'create']);
+$app->get('/reservations', [ReservationController::class, 'getReservation']);
