@@ -58,7 +58,6 @@ namespace Lucancstr\GestionChenil\views;
                 }?>
                     <li class="nav-item"><a class="nav-link" href="/reservations">Réservation</a></li>
                     <li class="nav-item"><a class="nav-link" href="/animaux">Animaux</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/calendrier">Calendrier</a></li>
                     <li class="nav-item"><a class="nav-link" href="/rapports">Rapports</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">Déconnexion</a></li>
                 </ul>

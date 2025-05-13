@@ -13,7 +13,7 @@ class UtilisateurController extends BaseController {
     public function getUsers(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
     {
         if($_SESSION['user']['Statut'] !== 3){
-            return $response->withHeader('Location', '/animaux')->withStatus(302);
+            return $response->withHeader('Location', '/')->withStatus(302);
         }
 
         $utilisateurs = Utilisateur::getAll(); // Récupère tous les utilisateurs
@@ -107,6 +107,13 @@ class UtilisateurController extends BaseController {
             $_SESSION['form_error'] = "Cet email est deja utilisé.";
         }
 
+        // Validation de la date
+        try {
+            Utilisateur::validateDate($DateNaissance, 'Y-m-d');
+        } catch (\Exception $e) {
+            $_SESSION['form_error'] = "Date invalide.";
+        }
+
         try {
             Utilisateur::validatePassword($MotDePasse);
         } catch (\Exception $e) {
@@ -161,7 +168,6 @@ class UtilisateurController extends BaseController {
         $Prenom = trim($post['Prenom']);
         $Pseudo = trim($post['Pseudo']);
         $Email = trim($post['Email']);
-        $MotDePasse = $post['MotDePasse'];
         $DateNaissance = trim($post['DateNaissance']);
         $Statut = trim($post['Statut']);
 
@@ -171,7 +177,6 @@ class UtilisateurController extends BaseController {
             'Prenom' => $Prenom,
             'Pseudo' => $Pseudo,
             'Email' => $Email,
-            'MotDepasse' => $MotDePasse,
             'DateNaissance' => $DateNaissance,
             'Statut' => $Statut
         ];
@@ -179,6 +184,13 @@ class UtilisateurController extends BaseController {
         // Vérification email valide
         if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['form_error'] = "L'email est invalide.";
+        }
+
+        // Validation de la date
+        try {
+            Utilisateur::validateDate($DateNaissance, 'Y-m-d');
+        } catch (\Exception $e) {
+            $_SESSION['form_error'] = "Date invalide.";
         }
 
         if (
@@ -191,7 +203,7 @@ class UtilisateurController extends BaseController {
         // Si pas d'erreur, on ajoute
         if (!isset($_SESSION['form_error'])) {
             try {
-                Utilisateur::updateUtilisateur($Nom, $Prenom, $Pseudo, $Email, $MotDePasse, $DateNaissance, $Statut, $idUtilisateur);
+                Utilisateur::updateUtilisateur($Nom, $Prenom, $Pseudo, $Email, $DateNaissance, $Statut, $idUtilisateur);
                 $_SESSION['form_succes'] = "Utilisateur modifié avec succès.";
     
                 return $response->withHeader('Location', '/utilisateurs')->withStatus(302);

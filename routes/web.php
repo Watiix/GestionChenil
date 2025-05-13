@@ -34,3 +34,8 @@ $app->post('/utilisateur-update/{id:[0-9]+}', [UtilisateurController::class, 'ed
 $app->post('/utilisateur-add', [UtilisateurController::class, 'addUtilisateur']);
 
 $app->get('/reservations', [ReservationController::class, 'getReservation']);
+$app->get('/reservation-accepted/{id:[0-9]+}', [ReservationController::class, 'acceptReservation']);
+$app->get('/reservation-refused/{id:[0-9]+}', [ReservationController::class, 'refusedReservation']);
+$app->get('/reservation-delete/{id:[0-9]+}', [ReservationController::class, 'deleteReservation']);
+$app->get('/reservation-showForm', [ReservationController::class, 'showReservationForm']);
+$app->post('/reservation-add', [ReservationController::class, 'addReservation']);

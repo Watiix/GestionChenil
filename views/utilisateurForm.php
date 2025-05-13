@@ -1,4 +1,4 @@
-<?php $isEdit = isset($utilisateurs['IdUtilisateur']); ?>
+<?php $isEdit = isset($utilisateurs); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -32,19 +32,13 @@
                             <input type="text" class="form-control" id="Prenom" name="Prenom" required
                                    value="<?= htmlspecialchars($utilisateurs['Prenom'] ?? '') ?>">
                         </div>
-
+                         
                         <div class="mb-3">
                             <label for="Pseudo" class="form-label">Pseudo</label>
                             <input type="text" class="form-control" id="Pseudo" name="Pseudo" required
                                    value="<?= htmlspecialchars($utilisateurs['Pseudo'] ?? '') ?>">
                         </div>
-                        <?php if ($isEdit): ?>
-                            <div class="mb-3">
-                                <label for="MotDePasseVisible" class="form-label">Mot de passe</label>
-                                <input type="password" class="form-control" id="MotDePasseVisible" value="<?= htmlspecialchars($utilisateurs['MotDePasse'] ?? '') ?>" disabled>
-                            </div>
-                            <input type="hidden" name="MotDePasse" value="<?= htmlspecialchars($utilisateurs['MotDePasse'] ?? '') ?>">
-                        <?php else: ?>
+                        <?php if (!$isEdit): ?>
                             <div class="mb-3">
                                 <label for="MotDePasse" class="form-label">Mot de passe</label>
                                 <input type="password" class="form-control" id="MotDePasse" name="MotDePasse" required>
@@ -69,6 +63,7 @@
                                 <option value="" disabled <?= !isset($utilisateurs['Statut']) ? 'selected' : '' ?>>-- Sélectionner --</option>
                                 <option value="1" <?= isset($utilisateurs['Statut']) && $utilisateurs['Statut'] == 1 ? 'selected' : '' ?>>Client</option>
                                 <option value="2" <?= isset($utilisateurs['Statut']) && $utilisateurs['Statut'] == 2 ? 'selected' : '' ?>>Employé</option>
+                                <option value="3" <?= isset($utilisateurs['Statut']) && $utilisateurs['Statut'] == 3 ? 'selected' : '' ?>>Administrateur</option>
                             </select>
                         </div>
 

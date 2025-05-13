@@ -171,18 +171,17 @@ class Utilisateur
         $stmt->execute();
     }
  
-    public static function updateUtilisateur($Nom, $Prenom, $Pseudo, $Email, $MotDePasse, $DateNaissance, $Statut, $idUtilisateur)
+    public static function updateUtilisateur($Nom, $Prenom, $Pseudo, $Email, $DateNaissance, $Statut, $idUtilisateur)
     {
         $pdo = Database::connection();
     
-        $stmt = $pdo->prepare("UPDATE UTILISATEURS SET Nom = :Nom, Prenom = :Prenom, Pseudo = :Pseudo, Email = :Email, MotDePasse = :MotDePasse, DateNaissance = :DateNaissance, Statut = :Statut WHERE IdUtilisateur = :idUtilisateur");
+        $stmt = $pdo->prepare("UPDATE UTILISATEURS SET Nom = :Nom, Prenom = :Prenom, Pseudo = :Pseudo, Email = :Email, DateNaissance = :DateNaissance, Statut = :Statut WHERE IdUtilisateur = :idUtilisateur");
 
     
         $stmt->bindParam(':Nom', $Nom);
         $stmt->bindParam(':Prenom', $Prenom);
         $stmt->bindParam(':Pseudo', $Pseudo);
         $stmt->bindParam(':Email', $Email);
-        $stmt->bindParam(':MotDePasse', $MotDePasse);
         $stmt->bindParam(':DateNaissance', $DateNaissance);
         $stmt->bindParam(':Statut', $Statut);
         $stmt->bindParam(':idUtilisateur', $idUtilisateur);

@@ -43,7 +43,7 @@ class AuthController extends BaseController {
         try {
             Utilisateur::validateDate($birthdate, 'Y-m-d');
         } catch (\Exception $e) {
-            $_SESSION['form_error'] = "La date ne peut pas être dans le futur.";
+            $_SESSION['form_error'] = "Date invalide.";
         }
 
         // Champs vides

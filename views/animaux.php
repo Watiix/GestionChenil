@@ -3,6 +3,14 @@
         <h2 class="mb-0">Liste des animaux</h2>
         <a href="/animal-form" class="btn btn-success" style="background-color: rgb(55, 118, 173); color: white;">Ajouter un animal</a>
     </div>
+
+    <?php if (!empty($_SESSION['form_succes'])): ?>
+        <div class="alert alert-success mt-4">
+            <?= htmlspecialchars($_SESSION['form_succes']) ?>
+        </div>
+        <?php unset($_SESSION['form_succes']); ?>
+    <?php endif; ?>
+    
     <?php $utilisateur = $_SESSION['user'] ?? null; ?>
     <?php if (empty($animaux)): ?>
         <div class="alert alert-warning">Aucun animal trouvé.</div>
@@ -43,10 +51,4 @@
         </div>
     <?php endif; ?>
 
-    <?php if (!empty($_SESSION['form_succes'])): ?>
-        <div class="alert alert-success mt-4">
-            <?= htmlspecialchars($_SESSION['form_succes']) ?>
-        </div>
-        <?php unset($_SESSION['form_succes']); ?>
-    <?php endif; ?>
 </div>
