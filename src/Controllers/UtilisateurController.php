@@ -34,7 +34,7 @@ class UtilisateurController extends BaseController {
         Utilisateur::validateUser($idUtilisateur);
         $_SESSION['form_succes'] = "Utilisateur validé avec succès.";
 
-        return $response->withHeader('Location', '/utilisateurs')->withStatus(302);
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 
     public function refusedUser(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
@@ -48,7 +48,7 @@ class UtilisateurController extends BaseController {
         Utilisateur::refusedUser($idUtilisateur);
         $_SESSION['form_succes'] = "Supprimé avec succès.";
 
-        return $response->withHeader('Location', '/utilisateurs')->withStatus(302);
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 
     public function showUserForm(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface

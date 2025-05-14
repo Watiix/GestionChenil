@@ -1,4 +1,4 @@
-<?php $isEdit = isset($utilisateurs); ?>
+<?php $isEdit = isset($utilisateurs['IdUtilisateur']); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

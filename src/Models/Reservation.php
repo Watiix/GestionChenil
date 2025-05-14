@@ -35,14 +35,14 @@ class Reservation
     public static function getAllReservation()
     {
         $pdo = Database::connection();
-        $stmt = $pdo->query("SELECT * FROM RESERVATIONS ORDER BY DateDebut ASC");
+        $stmt = $pdo->query("SELECT * FROM RESERVATIONS ORDER BY (Etat = 2) ASC, DateDebut ASC");
         return $stmt->fetchAll();
     }
 
     public static function getAllUserReservation($IdProprietaire)
     {
         $pdo = Database::connection();
-        $stmt = $pdo->prepare("SELECT * FROM RESERVATIONS WHERE IdProprietaire = :IdProprietaire ORDER BY DateDebut ASC");
+        $stmt = $pdo->prepare("SELECT * FROM RESERVATIONS WHERE IdProprietaire = :IdProprietaire ORDER BY (Etat = 2) ASC, DateDebut ASC");
         $stmt->bindParam(':IdProprietaire', $IdProprietaire, PDO::PARAM_INT);
         $stmt->execute();
 
@@ -141,4 +141,30 @@ class Reservation
     
         $stmt->execute();
     }
+
+    public static function getReservationbyId($id)
+    {
+        $pdo = Database::connection();
+        $stmt = $pdo->prepare("SELECT * FROM RESERVATIONS WHERE IdReservation = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function updateReservation($DateDebut, $DateFin, $PrixJour, $BesoinParticulier,$IdProprietaire, $IdAnimal, $idReservation)
+    {
+        $pdo = Database::connection();
+    
+        $stmt = $pdo->prepare("UPDATE RESERVATIONS SET DateDebut = :DateDebut, DateFin = :DateFin, PrixJour = :PrixJour, BesoinParticulier = :BesoinParticulier, IdProprietaire = :IdProprietaire, IdAnimal = :IdAnimal WHERE IdReservation = :idReservation");
+
+        $stmt->bindParam(':DateDebut', $DateDebut);
+        $stmt->bindParam(':DateFin', $DateFin);
+        $stmt->bindParam(':PrixJour', $PrixJour);
+        $stmt->bindParam(':BesoinParticulier', $BesoinParticulier);
+        $stmt->bindParam(':IdProprietaire', $IdProprietaire);
+        $stmt->bindParam(':IdAnimal', $IdAnimal);
+        $stmt->bindParam(':idReservation', $idReservation);
+    
+        $stmt->execute();
+    }   
 }

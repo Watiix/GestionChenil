@@ -42,7 +42,6 @@ namespace Lucancstr\GestionChenil\views;
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(55, 118, 173);">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <img src="/img/logo.png" alt="Logo Les Amis Fidèles" class="me-3 logo-img">
                 Les Amis Fidèles
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"

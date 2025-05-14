@@ -39,3 +39,5 @@ $app->get('/reservation-refused/{id:[0-9]+}', [ReservationController::class, 're
 $app->get('/reservation-delete/{id:[0-9]+}', [ReservationController::class, 'deleteReservation']);
 $app->get('/reservation-showForm', [ReservationController::class, 'showReservationForm']);
 $app->post('/reservation-add', [ReservationController::class, 'addReservation']);
+$app->get('/reservation-edit/{id:[0-9]+}', [ReservationController::class, 'showEditForm']);
+$app->post('/reservation-update/{id:[0-9]+}', [ReservationController::class, 'editReservation']);

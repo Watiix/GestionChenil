@@ -1,3 +1,4 @@
+<?php $isEdit = isset($reservations['IdReservation']); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,11 +15,11 @@
                 <div class="card shadow-lg p-4 rounded-4 border-0">
 
                     <div class="text-center mb-4">
-                        <h2 class="mt-3">Ajouter une réservation</h2>
+                    <h2 class="mt-3"><?= $isEdit ? 'Modifier' : 'Ajouter' ?> une réservation</h2>
                         <p class="text-muted">Complétez les détails de la réservation</p>
                     </div>
 
-                    <form action="/reservation-add" method="post">
+                    <form action="<?= $isEdit ? '/reservation-update/' . $reservations['IdReservation'] : '/reservation-add' ?>" method="post">
                         <div class="mb-3">
                             <label for="DateDebut" class="form-label">Date de début</label>
                             <input type="date" class="form-control" id="DateDebut" name="DateDebut" required
@@ -78,7 +79,7 @@
 
                         <div class="d-grid mt-3">
                             <button type="submit" class="btn" style="background-color: rgb(55, 118, 173); color: white;">
-                                Ajouter la réservation
+                            <?= $isEdit ? 'Mettre à jour' : 'Ajouter' ?>
                             </button>
                         </div>
                     </form>

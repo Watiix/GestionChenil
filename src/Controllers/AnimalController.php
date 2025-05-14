@@ -12,14 +12,25 @@ class AnimalController extends BaseController {
 
     public function getAnimaux(ServerRequestInterface $request, ResponseInterface $response, array $args) : ResponseInterface
     {
+        $id = $_GET['id'] ?? null;
         $user = $_SESSION['user'];
     
         if ($user['Statut'] !== 1) {
-            $animaux = Animal::getAllWithProprietaire();
+            if(isset($id))
+                if($id == 0)
+                    $animaux = Animal::getAllWithProprietaire();
+                else
+                    $animaux = Animal::getAnimalById($id);
+            else
+                $animaux = Animal::getAllWithProprietaire();
+
+            $utilisateurs = Utilisateur::getAll();
+
+            return $this->view->render($response, 'animaux.php', ['animaux' => $animaux, 'utilisateurs' => $utilisateurs]);
         } else {
             $animaux = Animal::getAnimalById($user['IdUtilisateur']);
         }
-    
+        
         return $this->view->render($response, 'animaux.php', ['animaux' => $animaux]);
     }
 

@@ -19,7 +19,7 @@
         <?php unset($_SESSION['form_succes']); ?>
     <?php endif; ?>
 
-    <?php if (empty($reservations)): ?>
+    <?php if (empty($reservations) ): ?>
         <div class="alert alert-warning">Aucune réservation trouvée.</div>
     <?php else: ?>
         <div class="table-responsive">
@@ -32,7 +32,6 @@
                         <th>Prix/Jour</th>
                         <th>Besoins particuliers</th>
                         <th>Propriétaire</th>
-                        <th>Validée par</th>
                         <th>Animal</th>
                         <th>État</th>
                         <th>Action</th>
@@ -40,6 +39,9 @@
                 </thead>
                 <tbody>
                     <?php foreach ($reservations as $res): ?>
+
+                        <?php // REGLER UN PROBLEME ICI ?>
+                        <?php if ((int)$res['Etat'] !== 0): ?>
                         <tr>
                             <td><?= htmlspecialchars($res['IdReservation']) ?></td>
                             <td><?= htmlspecialchars($res['DateDebut']) ?></td>
@@ -47,7 +49,6 @@
                             <td><?= htmlspecialchars($res['PrixJour']) ?> CHF</td>
                             <td><?= htmlspecialchars($res['BesoinParticulier']) ?></td>
                             <td><?= htmlspecialchars($res['IdProprietaire']) ?></td>
-                            <td><?= $res['IdAdministrateur'] ?? '—' ?></td>
                             <td><?= htmlspecialchars($res['IdAnimal']) ?></td>
                             <td>
                                 <?php
@@ -70,14 +71,7 @@
                                 <?php 
                                 $isAdmin = $_SESSION['user']['Statut'] == 3;
                                 $etat = $res['Etat'];
-
-                                if ($isAdmin && $etat === 0): ?>
-                                    <div class="d-flex gap-2">
-                                        <a href="/reservation-accepted/<?= $res['IdReservation'] ?>" class="btn btn-sm btn-outline-success">Accepter</a>
-                                        <a href="/reservation-refused/<?= $res['IdReservation'] ?>" class="btn btn-sm btn-outline-danger">Refuser</a>
-                                    </div>
-                            
-                                <?php elseif ($isAdmin && $etat === 1): ?>
+                                     if ($isAdmin && $etat === 1): ?>
                                     <div class="d-flex gap-2">
                                         <a href="/reservation-edit/<?= $res['IdReservation'] ?>" class="btn btn-sm btn-outline-primary">Modifier</a>
                                         <a href="/reservation-delete/<?= $res['IdReservation'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Supprimer cette réservation ?')">Supprimer</a>
@@ -105,6 +99,7 @@
                                 <?php endif; ?>
                             </td>   
                         </tr>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
